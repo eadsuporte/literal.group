@@ -1,0 +1,364 @@
+<div class="row g-4 align-items-center">
+    <div class="col-lg-5">
+        <h1 class="display-5 fw-bold mb-3">Child course</h1>
+        <p class="lead mb-4"><strong>mod_childcourse</strong> adds a Moodle activity
+            that works as a <strong>shortcut inside a parent course</strong>. When
+            clicked, the user is redirected to a <strong>child course</strong> and
+            (optionally) the plugin performs <strong>automatic enrolment</strong>,
+            group mapping, and <strong>incremental synchronization</strong> of
+            <strong>completion</strong> and <strong>grades</strong>.</p>
+        <div class="d-flex flex-wrap gap-2"><span class="badge text-bg-primary">Auto
+        enrol</span> <span class="badge text-bg-secondary">Groups</span> <span
+                class="badge text-bg-info">Completion rules</span> <span
+                class="badge text-bg-success">Incremental sync</span> <span
+                class="badge text-bg-dark">Mobile support</span></div>
+        <div class="alert alert-info mt-3 mb-0">
+            <div class="fw-semibold mb-1">Mental model</div>
+            Parent course contains a "Child course" activity → user clicks → (optional
+            enrol + group mapping) → redirect to the child course.
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-sm overflow-hidden"><img class="img-fluid"
+                                                                  src="/upload/pages/images/mod_childcourse-1-banner.png"
+                                                                  alt="Illustration: a course activity acting as a shortcut to another course">
+        </div>
+        <div class="text-body-secondary small mt-2">Tip: replace this image with
+            your plugin banner or a screenshot of the activity configuration / teacher
+            dashboard.
+        </div>
+    </div>
+</div>
+<div class="py-5 bg-white border-top border-bottom">
+    <h2 class="fw-bold mb-3">What the plugin solves (in practice)</h2>
+    <p class="text-body-secondary mb-0">Moodle can link courses in many ways, but
+        most solutions become fragile when you need <strong>controlled
+            access</strong>, <strong>consistent group mapping</strong>, and
+        <strong>reliable tracking</strong>. This module adds the missing layer:
+        <strong>enrolment rules + stateful synchronization</strong> inside a single
+        activity.</p>
+    <div class="row row-cols-1 row-cols-md-2 g-3 mt-3">
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Clean shortcut inside the parent course
+                    </div>
+                    <div class="text-body-secondary">A single activity points to the child
+                        course, with optional "open in new tab" to streamline navigation.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Automatic enrolment (optional)</div>
+                    <div class="text-body-secondary">Enrol users when they access the
+                        activity, preserving roles and reducing "permission error" friction.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Group mapping that makes sense</div>
+                    <div class="text-body-secondary">Enrol into a specific group or
+                        inherit groups from the parent course to the child course
+                        (optional).
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Incremental sync (completion + grades)
+                    </div>
+                    <div class="text-body-secondary">A scheduled task keeps state and
+                        syncs changes incrementally, avoiding "full rebuild" runs.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-secondary mt-3 mb-0">
+        <div class="fw-semibold mb-1">Designed for real courses</div>
+        <ul class="mb-0">
+            <li>Supports <strong>Backup/Restore</strong>.</li>
+            <li>Can <strong>hide the child course</strong> from "My courses /
+                Overview" to reduce clutter.
+            </li>
+            <li>On delete, choose whether to <strong>unenrol link-enrolled
+                users</strong> or keep enrolments.
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="py-5">
+    <h2 class="fw-bold mb-3">How it works</h2>
+    <p class="text-body-secondary mb-0">The module stores configuration in the
+        instance table and tracks the operational mapping/state in dedicated tables.
+        On access, it optionally enrols and maps groups, then redirects the user.
+        Synchronization runs on schedule (and can be forced manually).</p>
+    <div class="row g-4 mt-4">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Student access flow</div>
+                    <ol class="mb-0">
+                        <li>User opens "Child course" activity.</li>
+                        <li>If enabled: enrolment is performed (role preserved if
+                            configured).
+                        </li>
+                        <li>Optional: group mapping (fixed group or inherited groups).</li>
+                        <li>Redirect to the child course (same tab or new tab).</li>
+                    </ol>
+                    <div class="alert alert-warning mt-3 mb-0">
+                        <div class="fw-semibold">Important</div>
+                        If automatic enrolment is disabled, the user must already have
+                        permission to access the child course, otherwise Moodle will show a
+                        permission error in the child course.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Teacher / manager tools</div>
+                    <ul class="mb-0">
+                        <li><strong>Manual sync action</strong> (when the user has
+                            permission) for immediate incremental sync.
+                        </li>
+                        <li><strong>Manage instances</strong> via a course management page
+                            (requires <code>moodle/course:update</code>).
+                        </li>
+                        <li><strong>Index</strong> page listing all instances inside the
+                            course.
+                        </li>
+                    </ul>
+                    <div class="alert alert-info mt-3 mb-0">
+                        <div class="fw-semibold mb-1">Plugin pages</div>
+                        <ul class="mb-0">
+                            <li><code>view.php</code> - main activity page (student redirects;
+                                teacher sees a dashboard)
+                            </li>
+                            <li><code>manage.php</code> - lists/manages instances in the
+                                course
+                            </li>
+                            <li><code>index.php</code> - lists module instances in the course
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="py-5 bg-white border-top border-bottom">
+    <h2 class="fw-bold mb-3">Activity completion rules</h2>
+    <p class="text-body-secondary mb-0">When Moodle completion is set to
+        <strong>Automatic</strong>, the activity can mark itself complete using
+        additional rules based on the child course.</p>
+    <div class="row g-3 mt-3">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">None</div>
+                    <div class="text-body-secondary">The plugin does not automatically
+                        control completion for this activity.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Course completed</div>
+                    <div class="text-body-secondary">Marks the activity complete when the
+                        user completes the <strong>child course</strong>.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">All activities</div>
+                    <div class="text-body-secondary">Marks the activity complete when the
+                        user completes all trackable activities in the child course (per
+                        plugin logic).
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-warning mt-3 mb-0">
+        <div class="fw-semibold">Note</div>
+        The child course must have <code>enablecompletion = 1</code> for
+        completion-based rules to work.
+    </div>
+</div>
+<div class="py-5">
+    <h2 class="fw-bold mb-3">Synchronization (grades and completion)</h2>
+    <p class="text-body-secondary mb-0">Synchronization is designed to be
+        incremental. Instead of recalculating everything, the plugin tracks state
+        and updates only what changed.</p>
+    <div class="row g-4 mt-4">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Scheduled task</div>
+                    <div class="text-body-secondary mb-3">The task
+                        <code>\mod_childcourse\task\sync_task</code> runs by default every
+                        <strong>15 minutes</strong> (see <code>db/tasks.php</code>) and
+                        performs incremental synchronization for all instances.
+                    </div>
+                    <div class="alert alert-secondary mb-0">
+                        <div class="fw-semibold mb-1">Operational idea</div>
+                        Keep a state cache per user/instance and sync only deltas to reduce
+                        load on large sites.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Manual sync</div>
+                    <div class="text-body-secondary mb-3">On the activity page (for users
+                        with permission), a <strong>Sync</strong> button/action forces an
+                        immediate incremental run.
+                    </div>
+                    <ul class="mb-0">
+                        <li>Useful after configuration changes.</li>
+                        <li>Useful for debugging or support.</li>
+                        <li>Does not require waiting for cron schedule.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="py-5 bg-white border-top border-bottom">
+    <h2 class="fw-bold mb-3">Mobile support (Moodle App)</h2>
+    <p class="text-body-secondary mb-0">In the Moodle App, the activity renders a
+        <strong>simple screen</strong> with a single button to open the child
+        course. Clicking it performs the same enrolment + access flow as the web
+        version.</p>
+    <div class="alert alert-info mt-3 mb-0">
+        <div class="fw-semibold mb-1">Mobile UI rule</div>
+        Keep it minimal: one button, no noise - fast, reliable, and easy for
+        students.
+    </div>
+</div>
+<div class="py-5">
+    <h2 class="fw-bold mb-3">Data structure (tables)</h2>
+    <p class="text-body-secondary mb-0">The plugin uses dedicated tables to keep
+        configuration clean and synchronization scalable.</p>
+    <div class="row g-3 mt-3">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2"><code>{childcourse}</code></div>
+                    <div class="text-body-secondary">Instance settings (including
+                        completion rules and sync timestamps).
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2"><code>{childcourse_map}</code></div>
+                    <div class="text-body-secondary">Tracks enrolments / groups created
+                        per instance and per user.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2"><code>{childcourse_state}</code></div>
+                    <div class="text-body-secondary">State cache for incremental
+                        synchronization (grades / completion).
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-secondary mt-3 mb-0">
+        <div class="fw-semibold mb-1">Why this matters</div>
+        Separating "settings", "mapping", and "state" prevents slow scans and keeps
+        sync predictable as enrolments grow.
+    </div>
+</div>
+<div class="py-5 bg-white border-top">
+    <div
+            class="d-flex flex-wrap align-items-end justify-content-between gap-2 mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Support</h2>
+            <div class="text-body-secondary">For questions, bugs, improvements, or
+                suggestions, open an issue with enough context to reproduce.
+            </div>
+        </div>
+        <a class="btn btn-outline-secondary" href="#top">Back to top</a>
+    </div>
+    <div class="row g-4 align-items-center">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">When opening a ticket, include</div>
+                    <ul class="mb-0">
+                        <li>Moodle version</li>
+                        <li>Steps to reproduce</li>
+                        <li>Which activity instance (parent course + child course IDs)</li>
+                        <li>Whether auto-enrol / groups / role-preserve were enabled</li>
+                        <li>Cron / task logs (if it’s about sync)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="d-grid gap-2"><a class="btn btn-info btn-lg"
+                                         href="https://github.com/EduardoKrausME/moodle-mod_childcourse/issues">
+                Open GitHub Issue </a> <a class="btn btn-outline-info btn-lg"
+                                          href="https://eduardokraus.com/contato"> Contact </a></div>
+        </div>
+    </div>
+    <div class="row g-3 mt-4">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Best practices</div>
+                    <ul class="mb-0">
+                        <li>Enable auto-enrol when you want a "one-click access" experience.
+                        </li>
+                        <li>Use group mapping to keep cohorts consistent across parent/child
+                            courses.
+                        </li>
+                        <li>Prefer incremental sync for large sites (avoid manual full sync
+                            habits).
+                        </li>
+                        <li>Test completion rules on a staging site before rolling to
+                            production.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Why this approach works</div>
+                    <ul class="mb-0">
+                        <li>No core modifications.</li>
+                        <li>Single activity UX inside the parent course.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

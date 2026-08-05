@@ -1,0 +1,343 @@
+<div class="alert alert-warning mt-3 mb-0">
+    <div class="fw-semibold">Objetivo</div>
+    <div class="mb-0">Pare de enviar “e-mails padrão feios do Moodle” e tenha um sistema de e-mails limpo, com marca e
+        customizável.
+    </div>
+</div>
+<div class="row g-4 mt-2 align-items-center">
+    <div class="col-lg-4">
+        <h1 class="display-5 fw-bold mb-3">Kopere Email</h1>
+        <p class="lead mb-4"><strong>message_kopereemail</strong> é um
+            <strong>output de mensagens</strong> baseado em <code>message_email</code>, criado para entregar <strong>e-mails
+                consistentes e com marca</strong> - sem deixar de permitir que você crie <strong>HTML totalmente
+                personalizado</strong> por tipo de notificação.</p>
+    </div>
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm overflow-hidden"><img
+                alt="Prévia de e-mail mostrando wrapper aplicado a uma mensagem personalizada de provider"
+                class="img-fluid" src="/upload/pages/images/3-banner.png"/>
+        </div>
+    </div>
+</div>
+<div class="py-5 bg-white border-top border-bottom">
+    <h2 class="fw-bold mb-3">O que o plugin resolve (na prática)</h2>
+    <p class="text-body-secondary mb-0">O Moodle pode enviar muitas notificações diferentes, vindas de muitos plugins.
+        Este plugin adiciona a camada que faltava:
+        <strong>controle, consistência e customização</strong> sem alterações no core nem gambiarras no tema.</p>
+    <div class="row row-cols-1 row-cols-md-2 g-3">
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Padronizar identidade</div>
+                    <div class="text-body-secondary">Aplique um wrapper único para entregar layout, espaçamento,
+                        identidade visual e links consistentes.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Mensagens personalizadas por provider</div>
+                    <div class="text-body-secondary">Crie mensagens bonitas e personalizadas para eventos-chave (curso
+                        concluído, lembretes, avisos).
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Controle de assunto + corpo</div>
+                    <div class="text-body-secondary">Sobrescreva assunto e conteúdo HTML em um único lugar, centralizado
+                        na administração.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Melhor comportamento na caixa de entrada</div>
+                    <div class="text-body-secondary">O modo resumo para conversas em grupo reduz spam e melhora a
+                        experiência.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-info mt-3 mb-0">
+        <div class="fw-semibold mb-1">Melhor parte</div>
+        O Moodle continua enviando notificações normalmente - o plugin intercepta a entrega e aplica suas regras.
+    </div>
+</div>
+<div class="py-5">
+    <h2 class="fw-bold mb-3">Como funciona</h2>
+    <p class="text-body-secondary mb-0">O plugin adiciona uma camada de customização sobre o fluxo de mensagens já
+        existente do Moodle. Ele decide o que enviar com base no provider e no HTML disponível, depois padroniza a saída
+        final com o wrapper.</p>
+    <div class="alert alert-secondary mt-3 mb-0">
+        <div class="fw-semibold mb-1">Regra prática</div>
+        <ul class="mb-0">
+            <li>Se <code>fullmessagehtml</code> existe → aplica o wrapper.</li>
+            <li>Se não existir → cria HTML simples a partir do texto e aplica o wrapper (se configurado).</li>
+        </ul>
+    </div>
+    <div class="row g-4 mt-4">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Migração automática de configuração (na instalação)</div>
+                    <div class="text-body-secondary mb-3">Para evitar que estudantes recebam e-mails duplicados, o
+                        plugin pode migrar configurações para “assumir o lugar” do output padrão de e-mail.
+                    </div>
+                    <ul class="mb-0">
+                        <li>Copia a configuração existente de <code>message/email</code> para
+                            <code>message_kopereemail</code>.
+                        </li>
+                        <li>Reescreve flags de ativação dos providers de <code>email</code> →
+                            <code>kopereemail</code>.
+                        </li>
+                        <li>Bloqueia providers (<code>*_locked = 1</code>) para manter consistência.
+                        </li>
+                        <li>Desativa o processador antigo de e-mail em
+                            <code>mdl_message_processors</code>.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Importar / Exportar configurações</div>
+                    <div class="text-body-secondary mb-3">Mova wrapper + templates por provider entre ambientes
+                        (homologação → produção) ou entre sites.
+                    </div>
+                    <ul class="mb-0">
+                        <li>Exporta o wrapper global.</li>
+                        <li>Exporta mensagens personalizadas por provider (componente + nome).</li>
+                        <li>Não sobrescreve preferências operacionais do Moodle, como flags enabled/locked.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="py-5 bg-white border-top border-bottom">
+    <h2 class="fw-bold mb-3">Placeholders disponíveis</h2>
+    <p class="text-body-secondary mb-0">Templates usam placeholders no estilo Mustache. Use chaves triplas ao inserir
+        HTML.</p>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Comum</div>
+                    <ul class="mb-0">
+                        <li><code>{{subject}}</code></li>
+                        <li><code>{{fullmessage}}</code></li>
+                        <li><code>{{{fullmessagehtml}}}</code></li>
+                        <li><code>{{dates.now}}</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Site</div>
+                    <ul class="mb-0">
+                        <li><code>{{site.fullname}}</code></li>
+                        <li><code>{{site.shortname}}</code></li>
+                        <li><code>{{site.url}}</code></li>
+                        <li><code>{{site.logourl}}</code> /
+                            <code>{{site.compact_logourl}}</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Usuários destino</div>
+                    <ul class="mb-0">
+                        <li><code>{{userto.id}}</code></li>
+                        <li><code>{{userto.profileurl}}</code></li>
+                        <li><code>{{userto.fullname}}</code></li>
+                        <li><code>{{userto.firstname}}</code> /
+                            <code>{{userto.lastname}}</code></li>
+                        <li><code>{{userto.email}}</code></li>
+                    </ul>
+                    <div class="fw-semibold mb-2">Usuários origem</div>
+                    <ul class="mb-0">
+                        <li><code>{{userfrom.id}}</code></li>
+                        <li><code>{{userfrom.profileurl}}</code></li>
+                        <li><code>{{userfrom.fullname}}</code></li>
+                        <li><code>{{userfrom.firstname}}</code> /
+                            <code>{{userfrom.lastname}}</code></li>
+                        <li><code>{{userfrom.email}}</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Curso (quando detectável)</div>
+                    <ul class="mb-0">
+                        <li><code>{{course.id}}</code></li>
+                        <li><code>{{course.fullname}}</code></li>
+                        <li><code>{{course.shortname}}</code></li>
+                        <li><code>{{course.url}}</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card border-0 shadow-sm mt-3">
+        <div class="card-body">
+            <div class="fw-semibold mb-2">Expansão sugerida (ideias de roadmap)</div>
+            <div class="text-body-secondary mb-2">Se quiser expandir a biblioteca de placeholders, estas são adições de
+                alto valor que mantêm os templates simples:
+            </div>
+            <ul class="mb-0">
+                <li><strong>Detalhes de conclusão do curso</strong>: data de conclusão, nota, URL do certificado, tempo
+                    gasto.
+                </li>
+                <li><strong>Metadados do curso</strong>: nome da categoria, data de início/fim, visibilidade, campos
+                    personalizados.
+                </li>
+                <li><strong>Conveniência do destinatário</strong>: idioma preferido, fuso horário, campos de perfil
+                    (subconjunto seguro).
+                </li>
+                <li><strong>Contexto do remetente</strong>: nome do papel no curso, departamento/campus (se disponível).
+                </li>
+                <li><strong>Formatação utilitária</strong>: datas pré-formatadas, links seguros, “resumo curto” de
+                    mensagens longas.
+                </li>
+                <li><strong>Links de CTA</strong>: URLs “Ir para o curso”, “Abrir atividade”, “Preferências de
+                    mensagens” como placeholders prontos para uso.
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="alert alert-warning mt-3 mb-0">
+        <div class="fw-semibold">Dica de template</div>
+        Insira HTML com <code>{{{variable}}}</code> (chaves triplas). Usar apenas
+        <code>{{variable}}</code> pode escapar o HTML e imprimir tags como texto.
+    </div>
+</div>
+<div class="py-5">
+    <div class="d-flex flex-wrap align-items-end justify-content-between gap-2 mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Capturas de tela</h2>
+            <div class="text-body-secondary">Telas reais da interface: editor de wrapper, templates personalizados por
+                provider e resultados.
+            </div>
+        </div>
+        <a class="btn btn-outline-secondary" href="#top">Voltar ao topo</a>
+    </div>
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100 overflow-hidden"><img
+                    alt="Editor de mensagem personalizada com assunto, editor HTML e placeholders disponíveis"
+                    class="img-fluid"
+                    src="/upload/pages/images/Captura%20de%20Tela%202026-02-04%20a%CC%80s%2011.52.56.png"/>
+                <div class="card-body">
+                    <div class="fw-semibold">Mensagem personalizada por provider</div>
+                    <div class="text-body-secondary">Edite assunto + HTML e use placeholders para gerar uma mensagem
+                        personalizada para esse provider.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100 overflow-hidden"><img
+                    alt="Editor de template wrapper mostrando placeholders de assunto e fullmessagehtml"
+                    class="img-fluid"
+                    src="/upload/pages/images/Captura%20de%20Tela%202026-02-04%20a%CC%80s%2011.53.16.png"/>
+                <div class="card-body">
+                    <div class="fw-semibold">Template wrapper (layout base)</div>
+                    <div class="text-body-secondary">Defina um wrapper global e injete o HTML do provider via <code>{{{fullmessagehtml}}}</code>.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100 overflow-hidden"><img
+                    alt="Lista administrativa de providers com ações para criar/editar/excluir mensagens personalizadas e exportar/importar JSON"
+                    class="img-fluid"
+                    src="/upload/pages/images/Captura%20de%20Tela%202026-02-04%20a%CC%80s%2011.53.56.png"/>
+                <div class="card-body">
+                    <div class="fw-semibold">Tabela de providers + Importar/Exportar</div>
+                    <div class="text-body-secondary">Centralize a gestão: crie/edite/exclua templates e migre
+                        configurações via JSON.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100 overflow-hidden"><img
+                    alt="Prévia de e-mail mostrando conteúdo personalizado renderizado dentro do wrapper"
+                    class="img-fluid"
+                    src="/upload/pages/images/Captura%20de%20Tela%202026-02-04%20a%CC%80s%2011.18.04.png"/>
+                <div class="card-body">
+                    <div class="fw-semibold">Resultado final do e-mail</div>
+                    <div class="text-body-secondary">O estudante recebe um e-mail limpo e com marca em vez do layout
+                        padrão do Moodle.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-info mt-4 mb-0">
+        <div class="fw-semibold mb-1">Fluxo de testes</div>
+        Crie/edite um template → salve → use prévia/teste de e-mail → ajuste até ficar perfeito.
+    </div>
+</div>
+<div class="py-5 bg-white border-top">
+    <div class="row g-4 align-items-center">
+        <div class="col-lg-7">
+            <h2 class="fw-bold mb-2">Suporte</h2>
+            <p class="text-body-secondary mb-0">Para dúvidas, bugs, melhorias ou sugestões, abra uma issue com: versão
+                do Moodle, passos para reproduzir, provider afetado (componente + nome) e exemplo de template (sem dados
+                sensíveis). Se for sobre resumo, inclua logs de cron/tarefa.</p>
+        </div>
+        <div class="col-lg-5">
+            <div class="d-grid gap-2"><a class="btn btn-info btn-lg"
+                                         href="https://github.com/EduardoKrausME/moodle-message_kopereemail/issues">Abrir
+                issue no GitHub</a> <a class="btn btn-outline-info btn-lg" href="https://eduardokraus.com/contato">Contato</a>
+            </div>
+        </div>
+    </div>
+    <div class="row g-3 mt-4">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Boas práticas</div>
+                    <ul class="mb-0">
+                        <li>Comece pelo wrapper: configure primeiro a identidade global.</li>
+                        <li>Customize apenas os providers que importam.</li>
+                        <li>Mantenha os templates objetivos e fáceis de ler rapidamente.</li>
+                        <li>Valide a estrutura HTML (feche as tags corretamente).</li>
+                        <li>Sempre teste depois de salvar.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Por que esta abordagem funciona</div>
+                    <ul class="mb-0">
+                        <li>Sem modificações no core.</li>
+                        <li>Sem gambiarras no tema.</li>
+                        <li>Gestão administrativa centralizada.</li>
+                        <li>Marca consistente em todos os e-mails.</li>
+                        <li>Ajuste fino opcional por provider.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

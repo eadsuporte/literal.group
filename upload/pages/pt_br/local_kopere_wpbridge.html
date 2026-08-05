@@ -1,0 +1,40 @@
+<p>Ponte entre WooCommerce e Moodle.</p>
+<div class="markdown-heading">
+    <h2 class="heading-element">Recursos</h2>
+</div>
+<ul>
+    <li>Mapear IDs de produtos WooCommerce para cursos Moodle</li>
+    <li>Mapear IDs de produtos WooCommerce para coortes Moodle</li>
+    <li>Receber webhooks de pedidos com validação por token</li>
+    <li>Validar assinatura HMAC do WooCommerce</li>
+    <li>Tarefa agendada para ressincronizar vendas concluídas</li>
+    <li>Criar automaticamente usuários Moodle quando não existirem</li>
+    <li>Inscrever usuários por inscrição manual</li>
+    <li>Adicionar usuários a coortes</li>
+    <li>Enviar notificações por e-mail pela API de mensagens do Moodle</li>
+</ul>
+<div class="markdown-heading">
+    <h2 class="heading-element">Configuração obrigatória</h2>
+</div>
+<ul>
+    <li>URL da loja</li>
+    <li>Consumer key do WooCommerce</li>
+    <li>Consumer secret do WooCommerce</li>
+    <li>Inscrição manual habilitada nos cursos de destino</li>
+</ul>
+<div class="markdown-heading">
+    <h2 class="heading-element">Páginas principais</h2>
+</div>
+<ul>
+    <li><code>/local/kopere_wpbridge/</code></li>
+    <li><code>/local/kopere_wpbridge/mappings.php</code></li>
+    <li><code>/admin/settings.php?section=local_kopere_wpbridge</code></li>
+</ul>
+<div class="markdown-heading">
+    <h2 class="heading-element">Endpoint do webhook</h2>
+</div>
+<p>A página de configurações mostra a URL completa com token.</p>
+<p>Exemplo:</p>
+<p>
+    <code>https://moodle.example.com/local/kopere_wpbridge/webhooks.php?token=...</code>
+</p>

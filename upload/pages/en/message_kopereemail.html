@@ -1,0 +1,361 @@
+<div class="alert alert-warning mt-3 mb-0">
+    <div class="fw-semibold">Goal</div>
+    <div class="mb-0">Stop sending "ugly default Moodle emails" and gain a clean,
+        branded, customizable email system.
+    </div>
+</div>
+<div class="row g-4 mt-2 align-items-center">
+    <div class="col-lg-4">
+        <h1 class="display-5 fw-bold mb-3">Kopere Email</h1>
+        <p class="lead mb-4"><strong>message_kopereemail</strong> is a Moodle
+            <strong>message output</strong> based on <code>message_email</code>, built
+            to deliver <strong>consistent, branded emails</strong> - while still
+            letting you create <strong>fully custom HTML</strong> per notification
+            type.</p>
+    </div>
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm overflow-hidden"><img class="img-fluid"
+                                                                  src="/upload/pages/images/3-banner.png"
+                                                                  alt="Email preview showing wrapper applied to a custom provider message">
+        </div>
+    </div>
+</div>
+<div class="py-5 bg-white border-top border-bottom">
+    <h2 class="fw-bold mb-3">What the plugin solves (in practice)</h2>
+    <p class="text-body-secondary mb-0">Moodle can send many different
+        notifications, from many plugin. This plugin adds the missing layer:
+        <strong>control, consistency, and customization</strong> without core
+        changes or theme hacks.</p>
+    <div class="row row-cols-1 row-cols-md-2 g-3">
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Standardize identity</div>
+                    <div class="text-body-secondary">Apply a single wrapper to deliver
+                        consistent layout, spacing, branding, and links.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Custom messages per provider</div>
+                    <div class="text-body-secondary">Create "nice" tailored messages for
+                        key events (course completed, reminders, warnings).
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Subject + body control</div>
+                    <div class="text-body-secondary">Override subject and HTML content in
+                        one place, centralized in admin.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Better inbox behavior</div>
+                    <div class="text-body-secondary">Digest mode for group conversations
+                        reduces spam and improves the experience.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-info mt-3 mb-0">
+        <div class="fw-semibold mb-1">Best part</div>
+        Moodle keeps sending notifications as usual - the plugin intercepts delivery
+        and applies your rules.
+    </div>
+</div>
+<div class="py-5">
+    <h2 class="fw-bold mb-3">How it works</h2>
+    <p class="text-body-secondary mb-0">The plugin adds a customization layer on
+        top of Moodle’s existing messaging flow. It decides what to send based on
+        provider and available HTML, then standardizes the final output with the
+        wrapper.</p>
+    <div class="alert alert-secondary mt-3 mb-0">
+        <div class="fw-semibold mb-1">Rule of thumb</div>
+        <ul class="mb-0">
+            <li>If <code>fullmessagehtml</code> exists → apply wrapper.</li>
+            <li>If it doesn’t → create simple HTML from text, then apply wrapper (if
+                configured).
+            </li>
+        </ul>
+    </div>
+    <div class="row g-4 mt-4">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Automatic configuration migration (on
+                        install)
+                    </div>
+                    <div class="text-body-secondary mb-3">To prevent students from
+                        receiving duplicate emails, the plugin can migrate settings to "take
+                        the place" of default email output.
+                    </div>
+                    <ul class="mb-0">
+                        <li>Copies existing config from <code>message/email</code> into
+                            <code>message_kopereemail</code>.
+                        </li>
+                        <li>Rewrites provider enabled flags from <code>email</code> →
+                            <code>kopereemail</code>.
+                        </li>
+                        <li>Locks providers (<code>*_locked = 1</code>) to keep consistency.
+                        </li>
+                        <li>Disables old email processor in
+                            <code>mdl_message_processors</code>.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Import / Export settings</div>
+                    <div class="text-body-secondary mb-3">Move wrapper + per-provider
+                        templates between environments (staging → production) or across
+                        sites.
+                    </div>
+                    <ul class="mb-0">
+                        <li>Exports global wrapper.</li>
+                        <li>Exports custom messages per provider (component + name).</li>
+                        <li>Does not overwrite Moodle operational preferences like
+                            enabled/locked flags.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="py-5 bg-white border-top border-bottom">
+    <h2 class="fw-bold mb-3">Available placeholders</h2>
+    <p class="text-body-secondary mb-0">Templates use Mustache-style placeholders.
+        Use triple braces when inserting HTML.</p>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Common</div>
+                    <ul class="mb-0">
+                        <li><code>{{subject}}</code></li>
+                        <li><code>{{fullmessage}}</code></li>
+                        <li><code>{{{fullmessagehtml}}}</code></li>
+                        <li><code>{{dates.now}}</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Site</div>
+                    <ul class="mb-0">
+                        <li><code>{{site.fullname}}</code></li>
+                        <li><code>{{site.shortname}}</code></li>
+                        <li><code>{{site.url}}</code></li>
+                        <li><code>{{site.logourl}}</code> /
+                            <code>{{site.compact_logourl}}</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Users to</div>
+                    <ul class="mb-0">
+                        <li><code>{{userto.id}}</code></li>
+                        <li><code>{{userto.profileurl}}</code></li>
+                        <li><code>{{userto.fullname}}</code></li>
+                        <li><code>{{userto.firstname}}</code> /
+                            <code>{{userto.lastname}}</code></li>
+                        <li><code>{{userto.email}}</code></li>
+                    </ul>
+                    <div class="fw-semibold mb-2">Users from</div>
+                    <ul class="mb-0">
+                        <li><code>{{userfrom.id}}</code></li>
+                        <li><code>{{userfrom.profileurl}}</code></li>
+                        <li><code>{{userfrom.fullname}}</code></li>
+                        <li><code>{{userfrom.firstname}}</code> /
+                            <code>{{userfrom.lastname}}</code></li>
+                        <li><code>{{userfrom.email}}</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Course (when detectable)</div>
+                    <ul class="mb-0">
+                        <li><code>{{course.id}}</code></li>
+                        <li><code>{{course.fullname}}</code></li>
+                        <li><code>{{course.shortname}}</code></li>
+                        <li><code>{{course.url}}</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card border-0 shadow-sm mt-3">
+        <div class="card-body">
+            <div class="fw-semibold mb-2">Suggested expansion (roadmap ideas)</div>
+            <div class="text-body-secondary mb-2">If you want to expand the
+                placeholder library, these are high-value additions that keep templates
+                simple:
+            </div>
+            <ul class="mb-0">
+                <li><strong>Course completion details</strong>: completion date, grade,
+                    certificate URL, time spent.
+                </li>
+                <li><strong>Course metadata</strong>: category name, start/end date,
+                    visibility, custom fields.
+                </li>
+                <li><strong>Recipient convenience</strong>: preferred language,
+                    timezone, profile fields (safe subset).
+                </li>
+                <li><strong>Sender context</strong>: role name in course,
+                    department/campus (if available).
+                </li>
+                <li><strong>Utility formatting</strong>: preformatted dates, safe links,
+                    "short excerpt" from long messages.
+                </li>
+                <li><strong>CTA links</strong>: "Go to course", "Open activity",
+                    "Message preferences" URLs as ready-to-use placeholders.
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="alert alert-warning mt-3 mb-0">
+        <div class="fw-semibold">Template tip</div>
+        Insert HTML with <code>{{{variable}}}</code> (triple braces). Using only
+        <code>{{variable}}</code> may escape HTML and print tags as text.
+    </div>
+</div>
+<div class="py-5">
+    <div
+            class="d-flex flex-wrap align-items-end justify-content-between gap-2 mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Screenshots</h2>
+            <div class="text-body-secondary">Real UI views: wrapper editor, provider
+                custom templates, and results.
+            </div>
+        </div>
+        <a class="btn btn-outline-secondary" href="#top">Back to top</a>
+    </div>
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100 overflow-hidden"><img
+                    class="img-fluid"
+                    src="/upload/pages/images/Captura%20de%20Tela%202026-02-04%20a%CC%80s%2011.52.56.png"
+                    alt="Custom message editor with subject, HTML editor, and available placeholders">
+                <div class="card-body">
+                    <div class="fw-semibold">Custom message per provider</div>
+                    <div class="text-body-secondary">Edit subject + HTML and use
+                        placeholders to generate a tailored message for that provider.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100 overflow-hidden"><img
+                    class="img-fluid"
+                    src="/upload/pages/images/Captura%20de%20Tela%202026-02-04%20a%CC%80s%2011.53.16.png"
+                    alt="Wrapper template editor showing subject and fullmessagehtml placeholders">
+                <div class="card-body">
+                    <div class="fw-semibold">Wrapper template (base layout)</div>
+                    <div class="text-body-secondary">Define a global wrapper and inject
+                        the provider HTML via <code>{{{fullmessagehtml}}}</code>.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100 overflow-hidden"><img
+                    class="img-fluid"
+                    src="/upload/pages/images/Captura%20de%20Tela%202026-02-04%20a%CC%80s%2011.53.56.png"
+                    alt="Admin list of providers with actions to create/edit/delete custom messages and export/import JSON">
+                <div class="card-body">
+                    <div class="fw-semibold">Providers table + Import/Export</div>
+                    <div class="text-body-secondary">Centralize management:
+                        create/edit/delete templates and migrate settings via JSON.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100 overflow-hidden"><img
+                    class="img-fluid"
+                    src="/upload/pages/images/Captura%20de%20Tela%202026-02-04%20a%CC%80s%2011.18.04.png"
+                    alt="Email preview showing custom content rendered inside the wrapper">
+                <div class="card-body">
+                    <div class="fw-semibold">Final email result</div>
+                    <div class="text-body-secondary">The student receives a clean, branded
+                        email instead of Moodle’s default layout.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-info mt-4 mb-0">
+        <div class="fw-semibold mb-1">Testing workflow</div>
+        Create/edit a template → save → use template preview/test email → adjust
+        until perfect.
+    </div>
+</div>
+<div class="py-5 bg-white border-top">
+    <div class="row g-4 align-items-center">
+        <div class="col-lg-7">
+            <h2 class="fw-bold mb-2">Support</h2>
+            <p class="text-body-secondary mb-0">For questions, bugs, improvements, or
+                suggestions, open an issue with: Moodle version, steps to reproduce,
+                affected provider (component + name), and template example (without
+                sensitive data). If it’s about digest, include cron/task logs.</p>
+        </div>
+        <div class="col-lg-5">
+            <div class="d-grid gap-2"><a class="btn btn-info btn-lg"
+                                         href="https://github.com/EduardoKrausME/moodle-message_kopereemail/issues">Open
+                GitHub Issue</a> <a class="btn btn-outline-info btn-lg"
+                                    href="https://eduardokraus.com/contato">Contact</a></div>
+        </div>
+    </div>
+    <div class="row g-3 mt-4">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Best practices</div>
+                    <ul class="mb-0">
+                        <li>Start with the wrapper: set the global identity first.</li>
+                        <li>Customize only the providers that matter.</li>
+                        <li>Keep templates objective and scannable.</li>
+                        <li>Validate HTML structure (close tags properly).</li>
+                        <li>Always test after saving.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Why this approach works</div>
+                    <ul class="mb-0">
+                        <li>No core modifications.</li>
+                        <li>No theme hacks.</li>
+                        <li>Centralized admin management.</li>
+                        <li>Consistent branding across all emails.</li>
+                        <li>Optional per-provider perfection.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
