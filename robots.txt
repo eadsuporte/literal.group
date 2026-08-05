@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mylearn.space/sitemap.xml
+Disallow: /assets/
+Disallow: /upload/
+
+Sitemap: https://literal.group/sitemap.xml

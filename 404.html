@@ -1,128 +1,106 @@
-<!doctype html>
-<html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Página não encontrada | MyLearn.space</title>
-    <meta name="description" content="A página que você tentou acessar não foi encontrada no MyLearn.space. Volte para a página inicial e continue sua experiência de aprendizagem online.">
+    <title>Page Not Found | Literal Group Services</title>
+    <meta name="description" content="The page you requested could not be found. Explore Literal Group Services hosting, plugins, upgrades and professional Software Moodle™ services.">
     <meta name="robots" content="noindex, follow">
-
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Página não encontrada | MyLearn.space">
-    <meta property="og:description" content="A página que você tentou acessar não foi encontrada. Volte para a página inicial do MyLearn.space.">
-    <meta property="og:url" content="https://mylearn.space/404.html">
-    <meta property="og:site_name" content="MyLearn.space">
-
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Página não encontrada | MyLearn.space">
-    <meta name="twitter:description" content="A página que você tentou acessar não foi encontrada. Volte para a página inicial do MyLearn.space.">
-
-    <link rel="canonical" href="https://mylearn.space/">
-
+    <link rel="canonical" href="https://literal.group/404.html">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <style>
-        :root {
-            color-scheme: light;
-            --bg: #f4f8ff;
-            --card: #ffffff;
-            --text: #17233c;
-            --muted: #61708f;
-            --primary: #0b63ce;
-            --primary-dark: #084a9b;
-            --border: #dce7f8;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
+        .error-page {
             min-height: 100vh;
-            font-family: Arial, Helvetica, sans-serif;
-            color: var(--text);
-            background:
-                radial-gradient(circle at top left, rgba(11, 99, 206, .18), transparent 32rem),
-                linear-gradient(135deg, #f4f8ff 0%, #eaf2ff 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
+            display: grid;
+            place-items: center;
+            padding: 48px 24px;
+            color: #fff;
+            background: radial-gradient(circle at 20% 20%, rgba(78, 215, 245, .22), transparent 35%),
+                        radial-gradient(circle at 80% 75%, rgba(112, 71, 214, .28), transparent 40%),
+                        linear-gradient(145deg, #071426, #101d3e 55%, #18143a);
         }
-
-        main {
-            width: min(720px, 100%);
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 28px;
-            padding: clamp(32px, 6vw, 64px);
-            box-shadow: 0 24px 70px rgba(23, 35, 60, .12);
+        .error-card {
+            width: min(760px, 100%);
+            padding: clamp(36px, 7vw, 72px);
             text-align: center;
+            border: 1px solid rgba(255, 255, 255, .15);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, .07);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, .35);
+            backdrop-filter: blur(18px);
         }
-
-        .code {
+        .error-logo {
+            display: block;
+            width: min(260px, 70%);
+            margin: 0 auto 38px;
+        }
+        .error-code {
+            margin: 0;
+            font-size: clamp(5rem, 18vw, 10rem);
+            line-height: .8;
+            font-weight: 900;
+            letter-spacing: -.06em;
+            color: #7ff2d2;
+            text-shadow: 0 0 35px rgba(127, 242, 210, .25);
+        }
+        .error-card h1 {
+            margin: 28px 0 16px;
+            color: #fff;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+        }
+        .error-card p {
+            max-width: 580px;
+            margin: 0 auto 34px;
+            color: rgba(255, 255, 255, .78);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        .error-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+        }
+        .error-actions a {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-width: 96px;
-            height: 48px;
-            margin-bottom: 24px;
-            border-radius: 999px;
-            background: rgba(11, 99, 206, .1);
-            color: var(--primary-dark);
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: .08em;
-        }
-
-        h1 {
-            margin: 0 0 16px;
-            font-size: clamp(32px, 6vw, 52px);
-            line-height: 1.05;
-            letter-spacing: -0.04em;
-        }
-
-        p {
-            margin: 0 auto 32px;
-            max-width: 560px;
-            color: var(--muted);
-            font-size: 18px;
-            line-height: 1.65;
-        }
-
-        a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 48px;
+            min-height: 50px;
             padding: 0 24px;
             border-radius: 999px;
-            background: var(--primary);
-            color: #ffffff;
-            text-decoration: none;
             font-weight: 700;
-            box-shadow: 0 14px 28px rgba(11, 99, 206, .22);
+            text-decoration: none;
         }
-
-        a:hover,
-        a:focus {
-            background: var(--primary-dark);
+        .error-primary {
+            color: #09251e;
+            background: #7ff2d2;
         }
-
-        small {
-            display: block;
-            margin-top: 28px;
-            color: var(--muted);
+        .error-secondary {
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, .28);
+            background: rgba(255, 255, 255, .07);
+        }
+        .error-actions a:hover,
+        .error-actions a:focus-visible {
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
-    <main>
-        <span class="code">404</span>
-        <h1>Página não encontrada</h1>
-        <p>O endereço acessado não existe ou foi movido. Volte para a página inicial do MyLearn.space e continue sua experiência de aprendizagem online.</p>
-        <a href="/">Voltar para o início</a>
-        <small>MyLearn.space</small>
-    </main>
+<main class="error-page">
+    <section class="error-card" aria-labelledby="error-title">
+        <a href="/" aria-label="Literal Group Services home">
+            <img class="error-logo" src="/assets/images/logo-mylearn.png" alt="Literal Group Services">
+        </a>
+        <p class="error-code" aria-hidden="true">404</p>
+        <h1 id="error-title">This page could not be found</h1>
+        <p>The address may have changed or the page may no longer exist. Return to the homepage or continue exploring our plugins and professional Software Moodle™ services.</p>
+        <nav class="error-actions" aria-label="Useful links">
+            <a class="error-primary" href="/">Go to homepage</a>
+            <a class="error-secondary" href="/services">Explore services</a>
+            <a class="error-secondary" href="/plugins">View plugins</a>
+        </nav>
+    </section>
+</main>
 </body>
 </html>
