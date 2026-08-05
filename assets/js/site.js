@@ -1,6 +1,4 @@
-if (location.protocol !== "https:") {
-    location.replace(location.href.replace(/^http:/, "https:"));
-}
+location.href="https://mylearn.space/";
 
 document.addEventListener("DOMContentLoaded", function () {
     const navToggle = document.querySelector("[data-nav-toggle]");
