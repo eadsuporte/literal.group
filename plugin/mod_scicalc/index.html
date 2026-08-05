@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Scientific Calculator - Moodle Plugin - Literal Group</title>
+    <meta name="description" content="This plugin adds a modern, responsive Scientific Calculator activity to Moodle, with functions such as trigonometry, logarithms, powers, square roots, and factorials, performing all calculations in the browser using a safe parser (no eval) and a Bootstrap-based interface integrated with Moodle.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .plugin-page-content {
+            overflow-wrap: anywhere;
+        }
+
+        .plugin-page-content a {
+            color: var(--green-dark);
+            font-weight: 800;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+        }
+
+        .plugin-page-content h1,
+        .plugin-page-content h2,
+        .plugin-page-content h3,
+        .plugin-page-content h4 {
+            margin-top: 28px;
+        }
+
+        .plugin-page-content p,
+        .plugin-page-content li,
+        .plugin-page-content .text-body-secondary,
+        .plugin-page-content .text-muted {
+            color: var(--muted);
+        }
+
+        .plugin-page-content .row {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 22px;
+        }
+
+        .plugin-page-content .col,
+        .plugin-page-content [class*="col-"] {
+            grid-column: span 12;
+        }
+
+        @media (min-width: 780px) {
+            .plugin-page-content .col-md-5 {
+                grid-column: span 5;
+            }
+
+            .plugin-page-content .col-md-6 {
+                grid-column: span 6;
+            }
+
+            .plugin-page-content .col-md-7 {
+                grid-column: span 7;
+            }
+
+            .plugin-page-content .row-cols-md-2 > .col {
+                grid-column: span 6;
+            }
+        }
+
+        @media (min-width: 1020px) {
+            .plugin-page-content .col-lg-4 {
+                grid-column: span 4;
+            }
+
+            .plugin-page-content .col-lg-5 {
+                grid-column: span 5;
+            }
+
+            .plugin-page-content .col-lg-7 {
+                grid-column: span 7;
+            }
+
+            .plugin-page-content .col-lg-8 {
+                grid-column: span 8;
+            }
+        }
+
+        .plugin-page-content .card,
+        .plugin-page-content .alert,
+        .plugin-page-content .list-group-item,
+        .empty-detail-card {
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            background: #fff;
+            box-shadow: 0 14px 34px rgba(20, 33, 61, .08);
+        }
+
+        .plugin-page-content .card-body,
+        .plugin-page-content .alert,
+        .empty-detail-card {
+            padding: 22px;
+        }
+
+        .plugin-page-content .shadow,
+        .plugin-page-content .shadow-sm {
+            box-shadow: var(--shadow);
+        }
+
+        .plugin-page-content .img-fluid,
+        .plugin-page-content .img-responsive {
+            max-width: 100%;
+            height: auto;
+            border-radius: 18px;
+        }
+
+        .plugin-page-content .lead {
+            font-size: 1.12rem;
+            color: var(--ink);
+        }
+
+        .plugin-page-content .badge {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 5px 10px;
+            background: rgba(0, 168, 107, .10);
+            color: var(--green-dark);
+            font-weight: 900;
+        }
+
+        .plugin-page-content .list-group,
+        .plugin-page-content .vstack {
+            display: grid;
+            gap: 12px;
+        }
+
+        .plugin-page-content .list-group-item {
+            padding: 14px 16px;
+        }
+
+        .plugin-page-content .d-flex {
+            display: flex;
+        }
+
+        .plugin-page-content .align-items-center {
+            align-items: center;
+        }
+
+        .plugin-page-content .justify-content-between {
+            justify-content: space-between;
+        }
+
+        .plugin-page-content .gap-3 {
+            gap: 14px;
+        }
+
+        .plugin-page-content .mb-0 {
+            margin-bottom: 0;
+        }
+
+        .plugin-page-content .mb-1 {
+            margin-bottom: 4px;
+        }
+
+        .plugin-page-content .mb-2 {
+            margin-bottom: 8px;
+        }
+
+        .plugin-page-content .mb-3 {
+            margin-bottom: 14px;
+        }
+
+        .plugin-page-content .mb-4 {
+            margin-bottom: 22px;
+        }
+
+        .plugin-page-content .mt-2 {
+            margin-top: 8px;
+        }
+
+        .plugin-page-content .mt-3 {
+            margin-top: 14px;
+        }
+
+        .plugin-page-content .mt-4 {
+            margin-top: 22px;
+        }
+
+        .plugin-page-content .mt-5 {
+            margin-top: 34px;
+        }
+
+        .plugin-page-content .my-4 {
+            margin-top: 22px;
+            margin-bottom: 22px;
+        }
+
+        .plugin-page-content .p-2 {
+            padding: 8px;
+        }
+
+        .plugin-page-content .p-3 {
+            padding: 16px;
+        }
+
+        .plugin-page-content .p-4 {
+            padding: 22px;
+        }
+
+        .plugin-page-content .py-5 {
+            padding-top: 42px;
+            padding-bottom: 42px;
+        }
+
+        .plugin-page-content .fw-bold,
+        .plugin-page-content .fw-semibold {
+            font-weight: 900;
+        }
+
+        .plugin-page-content .rounded,
+        .plugin-page-content .rounded-3 {
+            border-radius: 18px;
+        }
+
+        .plugin-page-content .border,
+        .plugin-page-content .border-top,
+        .plugin-page-content .border-bottom {
+            border-color: var(--line);
+        }
+
+        .plugin-page-content .bg-light,
+        .plugin-page-content .bg-body-tertiary {
+            background: var(--soft);
+        }
+    </style>
+</head>
+<body class="page-plugin-detail">
+<header class="site-header" data-site-header>
+    <div class="container header-shell">
+        <a class="brand" href="../_" aria-label="Literal Group home">
+            <span class="brand-mark">
+                <img src="../assets/images/logo-mylearn.png" alt="Literal Group logo">
+            </span>
+        </a>
+
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="main-navigation">
+            <span></span><span></span><span></span>
+            <span class="sr-only">Open menu</span>
+        </button>
+
+        <nav id="main-navigation" class="main-nav" data-main-nav aria-label="Main navigation">
+            <a href="../_">Home</a>
+            <a href="../plugins">Plugins</a>
+            <a href="../moodle-upgrades">Upgrades</a>
+            <a href="../service/moodlemobile">Mobile</a>
+            <a href="../services">Services</a>
+            <a href="../services#success-cases">Cases</a>
+            <a href="../_#pricing">Pricing</a>
+            <a href="../_#contact">Contact</a>
+        </nav>
+
+
+        <div class="language-switcher" aria-label="Language selector">
+            <a class="language-switcher-link is-active" href="https://mylearn.space/" lang="en" title="English">
+                <span class="language-switcher-flag" aria-hidden="true">&#127482;&#127480;</span>
+            </a>
+            <a class="language-switcher-link" href="https://eadsuporte.com.br/" lang="pt-BR" title="Portugu&ecirc;s">
+                <span class="language-switcher-flag" aria-hidden="true">&#127463;&#127479;</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+
+
+
+<main>
+            <section class="plugin-detail-hero">
+            <div class="container plugin-detail-grid">
+                <div class="plugin-detail-copy">
+                    <a class="back-link" href="../plugins">&larr; Back to plugins</a>
+                    <span class="tag">Activity</span>
+                    <h1>Scientific Calculator</h1>
+                    <p>This plugin adds a modern, responsive Scientific Calculator activity to Moodle, with functions such as trigonometry, logarithms, powers, square roots, and factorials, performing all calculations in the browser using a safe parser (no eval) and a Bootstrap-based interface integrated with Moodle.</p>
+
+                    <div class="plugin-detail-meta">
+                        <div>
+                            <span>Frankenstyle</span>
+                            <strong><code>mod_scicalc</code></strong>
+                        </div>
+                        <div>
+                            <span>Category</span>
+                            <strong>Activity</strong>
+                        </div>
+                        <div>
+                            <span>Reported sites</span>
+                            <strong>25 sites</strong>
+                        </div>
+                    </div>
+
+                    <div class="button-row detail-actions">
+                                                    <a class="btn btn-primary" href="https://moodle.org/plugins/mod_scicalc" target="_blank" rel="noopener">Open Moodle page</a>
+                                                <a class="btn btn-outline" href="../plugins">All plugins</a>
+                    </div>
+                </div>
+
+                <div class="plugin-detail-media">
+                                            <img class="plugin-detail-logo" src="../upload/images/mod_scicalc-logo.svg" alt="Logo of Scientific Calculator" loading="lazy">
+                    
+                                            <img class="plugin-detail-screenshot" src="../upload/images/mod_scicalc-screenshot.png" alt="Screenshot of Scientific Calculator" loading="lazy">
+                                    </div>
+            </div>
+        </section>
+
+                    <section class="section muted">
+                <div class="container">
+                    <div class="section-heading left">
+                        <h2>About Scientific Calculator</h2>
+                    </div>
+
+                    <article class="plugin-info-card plugin-page-content">
+                        <div class="row g-4 align-items-center">
+    <div class="col-lg-4">
+        <h1 class="display-5 fw-bold mb-3">Scientific Calculator</h1>
+        <p class="lead mb-4"><strong>This</strong> is a Moodle <strong>activity
+            module</strong> that adds a <strong>clean, fast, scientific
+            calculator</strong> directly inside your course - perfect for math,
+            physics, engineering, finance, and STEM training where students need a
+            reliable tool without leaving the LMS.</p>
+    </div>
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm overflow-hidden"><img class="img-fluid" src="../upload/pages/images/1-banner.png" alt="Scientific calculator interface preview (illustrative)">
+        </div>
+    </div>
+</div>
+<div class="py-5 bg-white border-top border-bottom">
+    <h2 class="fw-bold mb-3">What the plugin solves (in practice)</h2>
+    <p class="text-body-secondary mb-0">In many courses, students constantly
+        switch tabs to external calculators. This activity keeps them
+        <strong>focused, consistent, and productive</strong> - with a calculator
+        always available inside Moodle, without relying on third-party sites or
+        extensions.</p>
+    <div class="row row-cols-1 row-cols-md-2 g-3 mt-2">
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Calculator inside the course</div>
+                    <div class="text-body-secondary">Students can compute expressions
+                        during lessons, quizzes, and homework - without leaving Moodle.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Scientific functions included</div>
+                    <div class="text-body-secondary">Trig, logs, powers, roots, factorial,
+                        constants and more - accessible with one click.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Safe evaluation (no eval)</div>
+                    <div class="text-body-secondary">Expressions are parsed and evaluated
+                        using a controlled algorithm - safer than typical eval-based
+                        calculators.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Simple history &amp; reuse</div>
+                    <div class="text-body-secondary">A local calculation history lets
+                        students click results to reuse them instantly.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-info mt-3 mb-0">
+        <div class="fw-semibold mb-1">Best part</div>
+        It works as a regular activity: add it once to the course and students can
+        use it immediately - no extra accounts, no external sites.
+    </div>
+</div>
+<div class="py-5">
+    <h2 class="fw-bold mb-3">How it works</h2>
+    <p class="text-body-secondary mb-0">The activity renders a Mustache template
+        and loads a lightweight AMD module that handles input, parsing, and
+        calculation entirely in the browser (client-side). That means <strong>fast
+            interaction</strong> and <strong>no server load</strong> for each key
+        press.</p>
+    <div class="alert alert-secondary mt-3 mb-0">
+        <div class="fw-semibold mb-1">Rule of thumb</div>
+        <ul class="mb-0">
+            <li>Type an expression &rarr; press <strong>Enter</strong> or <code>=</code>.
+            </li>
+            <li>Functions insert as <code>sin(</code>, <code>sqrt(</code>,
+                <code>pow(</code> to speed up usage.
+            </li>
+            <li>History items are clickable &rarr; reuse results instantly.</li>
+        </ul>
+    </div>
+    <div class="row g-4 mt-4">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Safe expression evaluation</div>
+                    <div class="text-body-secondary mb-3">Instead of using
+                        <code>eval()</code>, the calculator processes the expression with:
+                    </div>
+                    <ul class="mb-0">
+                        <li>Tokenization (numbers, identifiers, operators)</li>
+                        <li>Shunting-yard algorithm (infix &rarr; RPN)</li>
+                        <li>RPN evaluation with a strict operator/function set</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Designed for teaching workflows</div>
+                    <div class="text-body-secondary mb-3">Ideal for STEM courses that need
+                        quick calculations during learning and practice.
+                    </div>
+                    <ul class="mb-0">
+                        <li>Add to any topic/week or section.</li>
+                        <li>Works great alongside PDFs, lessons, and problem sets.</li>
+                        <li>No personal data storage (privacy-friendly default).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="py-5 bg-white border-top border-bottom">
+    <h2 class="fw-bold mb-3">Supported functions &amp; constants</h2>
+    <p class="text-body-secondary mb-0">Expressions support common scientific
+        operators, constants, and functions. Use <code>^</code> for power and
+        <code>!</code> for factorial. Constants are case-insensitive.</p>
+    <div class="row g-3 mt-2">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Operators</div>
+                    <ul class="mb-0">
+                        <li><code>+</code> <code>-</code> <code>*</code> <code>/</code>
+                            <code>%</code> <code>^</code></li>
+                        <li>Parentheses: <code>( )</code></li>
+                        <li>Factorial: <code>!</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Constants</div>
+                    <ul class="mb-0">
+                        <li><code>pi</code> (&pi;)</li>
+                        <li><code>e</code> (Euler&rsquo;s number)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Trigonometry</div>
+                    <ul class="mb-0">
+                        <li><code>sin(x)</code> <code>cos(x)</code> <code>tan(x)</code></li>
+                        <li><code>asin(x)</code> <code>acos(x)</code> <code>atan(x)</code>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Algebra &amp; logs</div>
+                    <ul class="mb-0">
+                        <li><code>sqrt(x)</code> <code>abs(x)</code> <code>exp(x)</code>
+                        </li>
+                        <li><code>ln(x)</code> <code>log(x)</code></li>
+                        <li><code>pow(a,b)</code> <code>min(a,b)</code>
+                            <code>max(a,b)</code></li>
+                        <li><code>floor(x)</code> <code>ceil(x)</code> <code>round(x)</code>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-warning mt-3 mb-0">
+        <div class="fw-semibold">Tip</div>
+        Use parentheses to keep expressions readable (e.g.,
+        <code>sin(pi/2)+sqrt(9)*2</code>).
+    </div>
+</div>
+<div class="py-5 bg-white border-top">
+    <div class="row g-4 align-items-center">
+        <div class="col-lg-7">
+            <h2 class="fw-bold mb-2">Support</h2>
+            <p class="text-body-secondary mb-0">For issues and improvements, open a
+                GitHub issue including: Moodle version, steps to reproduce, expression
+                examples, and browser console logs (if relevant).</p>
+        </div>
+        <div class="col-lg-5">
+            <div class="d-grid gap-2"><a class="btn btn-info btn-lg" href="https://github.com/EduardoKrausME">Open GitHub</a> <a class="btn btn-outline-info btn-lg" href="https://eduardokraus.com/contato">Contact</a></div>
+        </div>
+    </div>
+    <div class="row g-3 mt-4">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Best practices</div>
+                    <ul class="mb-0">
+                        <li>Keep the calculator name clear (e.g., "Calculator (Math
+                            Support)").
+                        </li>
+                        <li>Place it near problem sets and formula resources.</li>
+                        <li>Encourage students to write expressions with parentheses.</li>
+                        <li>Use examples in the activity description for faster onboarding.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="fw-semibold mb-2">Why this approach works</div>
+                    <ul class="mb-0">
+                        <li>No core modifications.</li>
+                        <li>No external dependencies.</li>
+                        <li>Fast and responsive client-side UX.</li>
+                        <li>Privacy-friendly by default (no student data stored).</li>
+                        <li>Easy to extend (RAD/DEG, memory keys, saved history, exercises).
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>                    </article>
+                </div>
+            </section>
+        
+                    <section class="section">
+                <div class="container">
+                    <div class="section-heading left">
+                        <span class="tag">Related</span>
+                        <h2>Other Moodle plugins</h2>
+                    </div>
+
+                    <div class="plugin-catalogue compact-catalogue">
+                                                    <article class="catalogue-card">
+                                <a class="catalogue-image" href="mod_supervideo">
+                                                                            <img src="../upload/images/mod_supervideo-screenshot.png" alt="Screenshot of Mod Super Video" loading="lazy">
+                                                                    </a>
+                                <div class="catalogue-body">
+                                    <div class="catalogue-top">
+                                                                                    <img class="plugin-logo" src="../upload/images/mod_supervideo-logo.png" alt="Logo of Mod Super Video" loading="lazy">
+                                                                                <div>
+                                            <h2><a href="mod_supervideo">Mod Super Video</a></h2>
+                                            <code>mod_supervideo</code>
+                                        </div>
+                                    </div>
+                                    <p>The Super Video Module and Kapture enhance the teaching experience on Moodle by providing optimized video viewing and efficient video lecture production, enriching the learning environment for both teachers and students.</p>
+                                    <div class="catalogue-meta">
+                                        <span>1794 sites</span>
+                                        <a href="mod_supervideo">Details &rarr;</a>
+                                    </div>
+                                </div>
+                            </article>
+                                                    <article class="catalogue-card">
+                                <a class="catalogue-image" href="mod_certificatebeautiful">
+                                                                            <img src="../upload/images/mod_certificatebeautiful-screenshot.png" alt="Screenshot of Beautiful certificate" loading="lazy">
+                                                                    </a>
+                                <div class="catalogue-body">
+                                    <div class="catalogue-top">
+                                                                                    <img class="plugin-logo" src="../upload/images/mod_certificatebeautiful-logo.png" alt="Logo of Beautiful certificate" loading="lazy">
+                                                                                <div>
+                                            <h2><a href="mod_certificatebeautiful">Beautiful certificate</a></h2>
+                                            <code>mod_certificatebeautiful</code>
+                                        </div>
+                                    </div>
+                                    <p>The Certificate Beautiful plugin for Moodle allows you to create customized certificates with elegant and professional designs. It features an intuitive and user-friendly interface.</p>
+                                    <div class="catalogue-meta">
+                                        <span>816 sites</span>
+                                        <a href="mod_certificatebeautiful">Details &rarr;</a>
+                                    </div>
+                                </div>
+                            </article>
+                                                    <article class="catalogue-card">
+                                <a class="catalogue-image" href="mod_pdfprotect">
+                                                                            <img src="../upload/images/mod_pdfprotect-screenshot.png" alt="Screenshot of PDF Protect" loading="lazy">
+                                                                    </a>
+                                <div class="catalogue-body">
+                                    <div class="catalogue-top">
+                                                                                    <img class="plugin-logo" src="../upload/images/mod_pdfprotect-logo.svg" alt="Logo of PDF Protect" loading="lazy">
+                                                                                <div>
+                                            <h2><a href="mod_pdfprotect">PDF Protect</a></h2>
+                                            <code>mod_pdfprotect</code>
+                                        </div>
+                                    </div>
+                                    <p>This is a Moodle module developed to provide an extra layer of security for PDF files, preventing users from downloading, printing, or copying the content of the PDF. It is ideal for protecting sensitive material and preventing unauthorized sharing of documents.</p>
+                                    <div class="catalogue-meta">
+                                        <span>657 sites</span>
+                                        <a href="mod_pdfprotect">Details &rarr;</a>
+                                    </div>
+                                </div>
+                            </article>
+                                            </div>
+                </div>
+            </section>
+            </main>
+<footer class="site-footer">
+    <div class="container footer-grid">
+        <div>
+            <a class="brand footer-brand" href="../_">
+                <span class="brand-mark">
+                    <img src="../assets/images/logo-mylearn.png" alt="Literal Group logo">
+                </span>
+            </a>
+            <p>Software Moodle&trade; hosting, upgrades, customisation and plugins for modern learning organisations.</p>
+        </div>
+        <div>
+            <h3>Pages</h3>
+            <a href="../_">Home</a>
+            <a href="../services">Services</a>
+            <a href="../plugins">Plugins</a>
+        </div>
+        <div>
+            <h3>Moodle Services</h3>
+            <a href="../moodle-upgrades">Moodle&trade; Upgrades</a>
+            <a href="../service/moodle-hosting">Moodle&trade; Hosting</a>
+            <a href="../service/moodlemobile">Moodle&trade; Mobile</a>
+            <a href="../service/custom-development">Custom Development</a>
+            <a href="../service/local-kopere-dashboard">Kopere Dashboard Sub-plugins</a>
+            <a href="../services#contact">Request a Quote</a>
+        </div>
+        <div>
+            <h3>Contact</h3>
+            <a href="tel:+61493536147">+61 493 536 147</a>
+            <a href="mailto:contato@eadsuporte.com.br">contato@eadsuporte.com.br</a>
+            <span>Perth, Western Australia</span>
+        </div>
+    </div>
+    <div class="container footer-bottom">
+        <span>&copy; <span data-current-year>2026</span> Literal Group. All rights reserved.</span>
+        <span>Moodle&trade; is a registered trademark of Software Moodle&trade; Pty Ltd.</span>
+    </div>
+</footer>
+<script src="../assets/js/site.js" defer></script></body>
+</html>

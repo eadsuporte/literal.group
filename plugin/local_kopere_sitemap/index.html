@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Public sitemap - Moodle Plugin - Literal Group</title>
+    <meta name="description" content="This a Moodle plugin that automatically generates a public XML sitemap for the site and adds a reference to the sitemap in the of all Moodle pages.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .plugin-page-content {
+            overflow-wrap: anywhere;
+        }
+
+        .plugin-page-content a {
+            color: var(--green-dark);
+            font-weight: 800;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+        }
+
+        .plugin-page-content h1,
+        .plugin-page-content h2,
+        .plugin-page-content h3,
+        .plugin-page-content h4 {
+            margin-top: 28px;
+        }
+
+        .plugin-page-content p,
+        .plugin-page-content li,
+        .plugin-page-content .text-body-secondary,
+        .plugin-page-content .text-muted {
+            color: var(--muted);
+        }
+
+        .plugin-page-content .row {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 22px;
+        }
+
+        .plugin-page-content .col,
+        .plugin-page-content [class*="col-"] {
+            grid-column: span 12;
+        }
+
+        @media (min-width: 780px) {
+            .plugin-page-content .col-md-5 {
+                grid-column: span 5;
+            }
+
+            .plugin-page-content .col-md-6 {
+                grid-column: span 6;
+            }
+
+            .plugin-page-content .col-md-7 {
+                grid-column: span 7;
+            }
+
+            .plugin-page-content .row-cols-md-2 > .col {
+                grid-column: span 6;
+            }
+        }
+
+        @media (min-width: 1020px) {
+            .plugin-page-content .col-lg-4 {
+                grid-column: span 4;
+            }
+
+            .plugin-page-content .col-lg-5 {
+                grid-column: span 5;
+            }
+
+            .plugin-page-content .col-lg-7 {
+                grid-column: span 7;
+            }
+
+            .plugin-page-content .col-lg-8 {
+                grid-column: span 8;
+            }
+        }
+
+        .plugin-page-content .card,
+        .plugin-page-content .alert,
+        .plugin-page-content .list-group-item,
+        .empty-detail-card {
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            background: #fff;
+            box-shadow: 0 14px 34px rgba(20, 33, 61, .08);
+        }
+
+        .plugin-page-content .card-body,
+        .plugin-page-content .alert,
+        .empty-detail-card {
+            padding: 22px;
+        }
+
+        .plugin-page-content .shadow,
+        .plugin-page-content .shadow-sm {
+            box-shadow: var(--shadow);
+        }
+
+        .plugin-page-content .img-fluid,
+        .plugin-page-content .img-responsive {
+            max-width: 100%;
+            height: auto;
+            border-radius: 18px;
+        }
+
+        .plugin-page-content .lead {
+            font-size: 1.12rem;
+            color: var(--ink);
+        }
+
+        .plugin-page-content .badge {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 5px 10px;
+            background: rgba(0, 168, 107, .10);
+            color: var(--green-dark);
+            font-weight: 900;
+        }
+
+        .plugin-page-content .list-group,
+        .plugin-page-content .vstack {
+            display: grid;
+            gap: 12px;
+        }
+
+        .plugin-page-content .list-group-item {
+            padding: 14px 16px;
+        }
+
+        .plugin-page-content .d-flex {
+            display: flex;
+        }
+
+        .plugin-page-content .align-items-center {
+            align-items: center;
+        }
+
+        .plugin-page-content .justify-content-between {
+            justify-content: space-between;
+        }
+
+        .plugin-page-content .gap-3 {
+            gap: 14px;
+        }
+
+        .plugin-page-content .mb-0 {
+            margin-bottom: 0;
+        }
+
+        .plugin-page-content .mb-1 {
+            margin-bottom: 4px;
+        }
+
+        .plugin-page-content .mb-2 {
+            margin-bottom: 8px;
+        }
+
+        .plugin-page-content .mb-3 {
+            margin-bottom: 14px;
+        }
+
+        .plugin-page-content .mb-4 {
+            margin-bottom: 22px;
+        }
+
+        .plugin-page-content .mt-2 {
+            margin-top: 8px;
+        }
+
+        .plugin-page-content .mt-3 {
+            margin-top: 14px;
+        }
+
+        .plugin-page-content .mt-4 {
+            margin-top: 22px;
+        }
+
+        .plugin-page-content .mt-5 {
+            margin-top: 34px;
+        }
+
+        .plugin-page-content .my-4 {
+            margin-top: 22px;
+            margin-bottom: 22px;
+        }
+
+        .plugin-page-content .p-2 {
+            padding: 8px;
+        }
+
+        .plugin-page-content .p-3 {
+            padding: 16px;
+        }
+
+        .plugin-page-content .p-4 {
+            padding: 22px;
+        }
+
+        .plugin-page-content .py-5 {
+            padding-top: 42px;
+            padding-bottom: 42px;
+        }
+
+        .plugin-page-content .fw-bold,
+        .plugin-page-content .fw-semibold {
+            font-weight: 900;
+        }
+
+        .plugin-page-content .rounded,
+        .plugin-page-content .rounded-3 {
+            border-radius: 18px;
+        }
+
+        .plugin-page-content .border,
+        .plugin-page-content .border-top,
+        .plugin-page-content .border-bottom {
+            border-color: var(--line);
+        }
+
+        .plugin-page-content .bg-light,
+        .plugin-page-content .bg-body-tertiary {
+            background: var(--soft);
+        }
+    </style>
+</head>
+<body class="page-plugin-detail">
+<header class="site-header" data-site-header>
+    <div class="container header-shell">
+        <a class="brand" href="../_" aria-label="Literal Group home">
+            <span class="brand-mark">
+                <img src="../assets/images/logo-mylearn.png" alt="Literal Group logo">
+            </span>
+        </a>
+
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="main-navigation">
+            <span></span><span></span><span></span>
+            <span class="sr-only">Open menu</span>
+        </button>
+
+        <nav id="main-navigation" class="main-nav" data-main-nav aria-label="Main navigation">
+            <a href="../_">Home</a>
+            <a href="../plugins">Plugins</a>
+            <a href="../moodle-upgrades">Upgrades</a>
+            <a href="../service/moodlemobile">Mobile</a>
+            <a href="../services">Services</a>
+            <a href="../services#success-cases">Cases</a>
+            <a href="../_#pricing">Pricing</a>
+            <a href="../_#contact">Contact</a>
+        </nav>
+
+
+        <div class="language-switcher" aria-label="Language selector">
+            <a class="language-switcher-link is-active" href="https://mylearn.space/" lang="en" title="English">
+                <span class="language-switcher-flag" aria-hidden="true">&#127482;&#127480;</span>
+            </a>
+            <a class="language-switcher-link" href="https://eadsuporte.com.br/" lang="pt-BR" title="Portugu&ecirc;s">
+                <span class="language-switcher-flag" aria-hidden="true">&#127463;&#127479;</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+
+
+
+<main>
+            <section class="plugin-detail-hero">
+            <div class="container plugin-detail-grid">
+                <div class="plugin-detail-copy">
+                    <a class="back-link" href="../plugins">&larr; Back to plugins</a>
+                    <span class="tag">Local</span>
+                    <h1>Public sitemap</h1>
+                    <p>This a Moodle plugin that automatically generates a public XML sitemap for the site and adds a reference to the sitemap in the of all Moodle pages.</p>
+
+                    <div class="plugin-detail-meta">
+                        <div>
+                            <span>Frankenstyle</span>
+                            <strong><code>local_kopere_sitemap</code></strong>
+                        </div>
+                        <div>
+                            <span>Category</span>
+                            <strong>Local</strong>
+                        </div>
+                        <div>
+                            <span>Reported sites</span>
+                            <strong>13 sites</strong>
+                        </div>
+                    </div>
+
+                    <div class="button-row detail-actions">
+                                                    <a class="btn btn-primary" href="https://moodle.org/plugins/local_kopere_sitemap" target="_blank" rel="noopener">Open Moodle page</a>
+                                                <a class="btn btn-outline" href="../plugins">All plugins</a>
+                    </div>
+                </div>
+
+                <div class="plugin-detail-media">
+                                            <img class="plugin-detail-logo" src="../upload/images/local_kopere_sitemap-logo.png" alt="Logo of Public sitemap" loading="lazy">
+                    
+                                            <img class="plugin-detail-screenshot" src="../upload/images/local_kopere_sitemap-screenshot.png" alt="Screenshot of Public sitemap" loading="lazy">
+                                    </div>
+            </div>
+        </section>
+
+        
+                    <section class="section">
+                <div class="container">
+                    <div class="section-heading left">
+                        <span class="tag">Related</span>
+                        <h2>Other Moodle plugins</h2>
+                    </div>
+
+                    <div class="plugin-catalogue compact-catalogue">
+                                                    <article class="catalogue-card">
+                                <a class="catalogue-image" href="local_kopere_dashboard">
+                                                                            <img src="../upload/images/local_kopere_dashboard-screenshot.png" alt="Screenshot of Kopere Dashboard" loading="lazy">
+                                                                    </a>
+                                <div class="catalogue-body">
+                                    <div class="catalogue-top">
+                                                                                    <img class="plugin-logo" src="../upload/images/local_kopere_dashboard-logo.png" alt="Logo of Kopere Dashboard" loading="lazy">
+                                                                                <div>
+                                            <h2><a href="local_kopere_dashboard">Kopere Dashboard</a></h2>
+                                            <code>local_kopere_dashboard</code>
+                                        </div>
+                                    </div>
+                                    <p>Kopere Dashboard is a tool panel with reports, online users, backup, notifications and more.</p>
+                                    <div class="catalogue-meta">
+                                        <span>2546 sites</span>
+                                        <a href="local_kopere_dashboard">Details &rarr;</a>
+                                    </div>
+                                </div>
+                            </article>
+                                                    <article class="catalogue-card">
+                                <a class="catalogue-image" href="local_geniai">
+                                                                            <img src="../upload/images/local_geniai-screenshot.png" alt="Screenshot of GeniAI" loading="lazy">
+                                                                    </a>
+                                <div class="catalogue-body">
+                                    <div class="catalogue-top">
+                                                                                    <img class="plugin-logo" src="../upload/images/local_geniai-logo.png" alt="Logo of GeniAI" loading="lazy">
+                                                                                <div>
+                                            <h2><a href="local_geniai">GeniAI</a></h2>
+                                            <code>local_geniai</code>
+                                        </div>
+                                    </div>
+                                    <p>The GeniAI plugin for Moodle revolutionizes student-course interaction by providing an intelligent virtual assistant to instantly clarify doubts. The assistant offers contextual support, responds to questions in various languages, and adapts to the specific needs of each discipline.</p>
+                                    <div class="catalogue-meta">
+                                        <span>412 sites</span>
+                                        <a href="local_geniai">Details &rarr;</a>
+                                    </div>
+                                </div>
+                            </article>
+                                                    <article class="catalogue-card">
+                                <a class="catalogue-image" href="local_helpdesk">
+                                                                            <img src="../upload/images/local_helpdesk-screenshot.png" alt="Screenshot of Helpdesk and Knowledge base" loading="lazy">
+                                                                    </a>
+                                <div class="catalogue-body">
+                                    <div class="catalogue-top">
+                                                                                    <img class="plugin-logo" src="../upload/images/local_helpdesk-logo.png" alt="Logo of Helpdesk and Knowledge base" loading="lazy">
+                                                                                <div>
+                                            <h2><a href="local_helpdesk">Helpdesk and Knowledge base</a></h2>
+                                            <code>local_helpdesk</code>
+                                        </div>
+                                    </div>
+                                    <p>This plugin that provides a ticketing system for managing helpdesk requests. It allows users to create and track tickets while enabling administrators and support teams to manage and respond efficiently.</p>
+                                    <div class="catalogue-meta">
+                                        <span>365 sites</span>
+                                        <a href="local_helpdesk">Details &rarr;</a>
+                                    </div>
+                                </div>
+                            </article>
+                                            </div>
+                </div>
+            </section>
+            </main>
+<footer class="site-footer">
+    <div class="container footer-grid">
+        <div>
+            <a class="brand footer-brand" href="../_">
+                <span class="brand-mark">
+                    <img src="../assets/images/logo-mylearn.png" alt="Literal Group logo">
+                </span>
+            </a>
+            <p>Software Moodle&trade; hosting, upgrades, customisation and plugins for modern learning organisations.</p>
+        </div>
+        <div>
+            <h3>Pages</h3>
+            <a href="../_">Home</a>
+            <a href="../services">Services</a>
+            <a href="../plugins">Plugins</a>
+        </div>
+        <div>
+            <h3>Moodle Services</h3>
+            <a href="../moodle-upgrades">Moodle&trade; Upgrades</a>
+            <a href="../service/moodle-hosting">Moodle&trade; Hosting</a>
+            <a href="../service/moodlemobile">Moodle&trade; Mobile</a>
+            <a href="../service/custom-development">Custom Development</a>
+            <a href="../service/local-kopere-dashboard">Kopere Dashboard Sub-plugins</a>
+            <a href="../services#contact">Request a Quote</a>
+        </div>
+        <div>
+            <h3>Contact</h3>
+            <a href="tel:+61493536147">+61 493 536 147</a>
+            <a href="mailto:contato@eadsuporte.com.br">contato@eadsuporte.com.br</a>
+            <span>Perth, Western Australia</span>
+        </div>
+    </div>
+    <div class="container footer-bottom">
+        <span>&copy; <span data-current-year>2026</span> Literal Group. All rights reserved.</span>
+        <span>Moodle&trade; is a registered trademark of Software Moodle&trade; Pty Ltd.</span>
+    </div>
+</footer>
+<script src="../assets/js/site.js" defer></script></body>
+</html>
