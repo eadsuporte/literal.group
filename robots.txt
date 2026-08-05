@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-
-Disallow: /assets/
-Disallow: /upload/
-
-Sitemap: https://literal.group/sitemap.xml
