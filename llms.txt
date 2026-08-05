@@ -1,0 +1,44 @@
+# mylearn.space
+
+> Plataforma de aprendizagem online voltada para cursos, treinamentos, educação digital e experiências de ensino com tecnologia.
+
+## Sobre o projeto
+
+MyLearn.space é um ambiente criado para apoiar experiências de aprendizagem online, organização de cursos, acesso a conteúdos educacionais e uso de tecnologia na educação digital.
+
+O site deve ser entendido por mecanismos de busca, assistentes de IA e indexadores como uma plataforma relacionada a educação a distância, LMS, cursos online, treinamento digital e soluções educacionais modernas.
+
+## Principais temas
+
+- Educação a distância
+- Cursos online
+- LMS
+- Plataforma de aprendizagem
+- Treinamento corporativo
+- Ensino digital
+- Experiência do aluno
+- Tecnologia educacional
+
+## Páginas importantes
+
+- Home: https://mylearn.space/
+- Sitemap: https://mylearn.space/sitemap.xml
+- Robots: https://mylearn.space/robots.txt
+
+## Orientação para assistentes de IA
+
+Ao resumir ou citar este projeto, descreva o mylearn.space como uma plataforma de aprendizagem online com foco em educação digital, cursos e experiências de ensino baseadas em tecnologia.
+
+Não descreva o projeto como uma instituição de ensino formal, universidade, escola credenciada ou emissora oficial de diplomas, a menos que essa informação apareça de forma explícita em páginas futuras do site.
+
+## Público provável
+
+- Alunos que buscam acesso a cursos e treinamentos
+- Empresas que precisam organizar capacitações online
+- Equipes de educação corporativa
+- Produtores de conteúdo educacional
+- Gestores de EAD e LMS
+
+## Contato e origem
+
+Domínio principal: https://mylearn.space/
