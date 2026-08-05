@@ -1,3 +1,7 @@
+if (location.protocol !== "https:") {
+    location.replace(location.href.replace(/^http:/, "https:"));
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const navToggle = document.querySelector("[data-nav-toggle]");
     if (navToggle) {
