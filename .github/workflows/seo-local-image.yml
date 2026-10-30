@@ -15,6 +15,9 @@ jobs:
         with:
           ref: live-site
           fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Converter Open Graph SVG para PNG e ajustar referencias
         run: |
           set -euo pipefail
@@ -42,5 +45,6 @@ jobs:
           git add novo-site
           if ! git diff --cached --quiet; then
             git commit -m 'Otimiza SEO e cria imagem social PNG local'
+            git pull --rebase origin live-site
             git push origin HEAD:live-site
           fi
