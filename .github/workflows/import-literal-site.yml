@@ -20,6 +20,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p novo-site
+          mkdir -p novo-site/assets
+          curl -fLsS --retry 2 --max-time 25 'https://literal-group.eduardokraus.chatgpt.site/assets/social.svg' -o novo-site/assets/social.svg
           wget --mirror --recursive --level=4 --page-requisites --adjust-extension --convert-links --no-parent --no-host-directories --directory-prefix=novo-site --domains=literal-group.eduardokraus.chatgpt.site --quota=80m --timeout=20 --tries=2 --wait=0.1 -e robots=off 'https://literal-group.eduardokraus.chatgpt.site/' || true
           test -s novo-site/index.html
           echo 'Arquivos capturados:'
