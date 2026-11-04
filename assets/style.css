@@ -2966,3 +2966,14 @@ details>p {
     transition: none!important
   }
 }
+
+
+/* Language selector for Portuguese and Spanish versions. */
+.language-switch{display:flex;align-items:center;gap:7px;flex:none;font-size:12px;white-space:nowrap}
+.language-switch a{color:var(--muted);padding:6px 2px}
+.language-switch a[aria-current],.language-switch a:hover{font-weight:700;color:var(--blue)}
+.language-switch a:focus-visible,.mobile-language a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.mobile-language{display:none;gap:22px;border-top:1px solid var(--line);margin-top:10px;padding-top:9px}
+.mobile-language a[aria-current]{font-weight:700;color:var(--blue)}
+@media(max-width:1150px){.nav-wrap{gap:14px}.language-switch{gap:4px}}
+@media(max-width:900px){.language-switch{display:none}.mobile-language{display:flex}.mobile-language a{display:inline-block}}

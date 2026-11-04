@@ -1,16 +1,18 @@
 'use strict';
+const isSpanish = document.documentElement.lang.toLowerCase().startsWith('es');
+const translate = (pt, es) => isSpanish ? es : pt;
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const toggle = $('.menu-toggle'), mobile = $('#mobile-nav');
 function closeMenu() {
   if (!toggle) return;
   toggle.setAttribute('aria-expanded', 'false');
-  toggle.setAttribute('aria-label', 'Abrir menu');
+  toggle.setAttribute('aria-label', translate('Abrir menu', 'Abrir menú'));
   mobile.hidden = true;
 }
 toggle?.addEventListener('click', () =>  {
   const opened = toggle.getAttribute('aria-expanded') === 'true';
   toggle.setAttribute('aria-expanded', String(!opened));
-  toggle.setAttribute('aria-label', opened ? 'Abrir menu': 'Fechar menu');
+  toggle.setAttribute('aria-label', opened ? translate('Abrir menu', 'Abrir menú'): translate('Fechar menu', 'Cerrar menú'));
   mobile.hidden = opened;
 });
 document.addEventListener('keydown', e =>  {
@@ -57,13 +59,20 @@ const verticals =  {
     'Novos produtos digitais e uma base física para ampliar as possibilidades do ecossistema.'
   ]
 };
-$$('[data-vertical-tab]').forEach(b => b.addEventListener('click', () =>  {
+if (isSpanish) Object.assign(verticals, {
+  tecnologia: ['01', 'Tecnología y operaciones', 'La base para construir y crecer.', 'Ingeniería especializada, infraestructura digital y soporte para operaciones educativas y corporativas.'],
+  educacao: ['02', 'Educación en distintos ámbitos', 'Aprendizaje con contexto.', 'Soluciones que conectan el conocimiento con las necesidades de empresas, gobiernos y comunidades.'],
+  pessoas: ['03', 'Personas y oportunidades', 'Conocimiento que abre puertas.', 'Formación profesional y preparación para nuevas experiencias de vida, trabajo y movilidad.'],
+  esportes: ['04', 'Deporte y comunidad', 'La pasión se convierte en conocimiento.', 'Educación para clubes, equipos y las comunidades que dan vida al deporte.'],
+  laboratorio: ['05', 'Laboratorio e infraestructura', 'Un espacio para experimentar y conectar.', 'Nuevos productos digitales y una base física para ampliar las posibilidades del ecosistema.']
+});
+$('[data-vertical-tab]').forEach(b => b.addEventListener('click', () =>  {
   const key = b.dataset.verticalTab, v = verticals[key];
   $$('[data-vertical-tab]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-  $('#vertical-number').textContent = v[0] + ' / ' + v[1].toLocaleUpperCase('pt-BR');
+  $('#vertical-number').textContent = v[0] + ' / ' + v[1].toLocaleUpperCase(isSpanish ? 'es' : 'pt-BR');
   $('#vertical-title').textContent = v[2];
   $('#vertical-description').textContent = v[3];
-  $('#vertical-link').href = '/ecossistema/?vertical=' + key;
+  $('#vertical-link').href = (isSpanish ? '/es/ecossistema.html?vertical=' : '/ecossistema/?vertical=') + key;
 }));
 const filterButtons = $$('[data-filter]'), search = $('#portfolio-search');
 const normalize = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -73,11 +82,11 @@ function filterPortfolio() {
   const term = normalize(search.value.trim());
   let count = 0;
   $$('#portfolio-results .project-card').forEach(c =>  {
-    const show = (selected === 'all' || c.dataset.vertical === selected) && normalize(c.dataset.search).includes(term);
+    const show = (selected === 'all' || c.dataset.vertical === selected) && normalize((c.dataset.search || '') + ' ' + c.textContent).includes(term);
     c.hidden = !show;
     if (show) count++;
   });
-  $('#result-count').textContent = count === 1 ? '1 negócio ou iniciativa': count + ' negócios e iniciativas';
+  $('#result-count').textContent = count === 1 ? translate('1 negócio ou iniciativa', '1 negocio o iniciativa'): count + translate(' negócios e iniciativas', ' negocios e iniciativas');
   $('.empty-state').hidden = count > 0;
   filterButtons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === selected)));
   const u = new URL(location.href);
@@ -120,11 +129,11 @@ if (form) {
     if (!form.reportValidity()) return;
     const values = new FormData(form), name = values.get('name').trim(), company = values.get('company').trim(), email = values.get('email').trim(), message = values.get('message').trim();
     if (!name || message.length < 10) {
-      toast('Informe seu nome e descreva o projeto com pelo menos 10 caracteres.');
+      toast(translate('Informe seu nome e descreva o projeto com pelo menos 10 caracteres.', 'Introduce tu nombre y describe el proyecto con al menos 10 caracteres.'));
       return;
     }
     const label = business.options[business.selectedIndex].text;
-    const text = 'Apresentação de projeto | Literal Group\n\nNome: ' + name + '\nE-mail: ' + email + (company ? '\nOrganização: ' + company: '') + '\nInteresse: ' + label + '\n\n' + message;
+    const text = translate('Apresentação de projeto | Literal Group\n\nNome: ', 'Presentación de proyecto | Literal Group\n\nNombre: ') + name + translate('\nE-mail: ', '\nCorreo electrónico: ') + email + (company ? translate('\nOrganização: ', '\nOrganización: ') + company: '') + translate('\nInteresse: ', '\nInterés: ') + label + '\n\n' + message;
     $('#brief-text').value = text;
     const tech = [
       'eadsuporte',
@@ -156,12 +165,12 @@ if (form) {
   $('#copy-brief').addEventListener('click', async() =>  {
     try {
       await navigator.clipboard.writeText($('#brief-text').value);
-      toast('Apresentação copiada. Você pode compartilhá-la agora.');
+      toast(translate('Apresentação copiada. Você pode compartilhá-la agora.', 'Propuesta copiada. Ya puedes compartirla.'));
     }
     catch {
       $('#brief-text').focus();
       $('#brief-text').select();
-      toast('Selecione Copiar no seu navegador para copiar o texto.');
+      toast(translate('Selecione Copiar no seu navegador para copiar o texto.', 'Selecciona Copiar en tu navegador para copiar el texto.'));
     }
   });
 }
